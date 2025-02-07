@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Remote Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .controller {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px;
+        }
+
+        button {
+            width: 100px;
+            height: 100px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #stop {
+            background-color: #f44336;
+        }
+
+        #stop:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="controller">
+        <div></div>
+        <button id="forward">↑</button>
+        <div></div>
+
+        <button id="left">←</button>
+        <button id="stop">Stop</button>
+        <button id="right">→</button>
+
+        <div></div>
+        <button id="backward">↓</button>
+        <div></div>
+    </div>
+
+    <script>
+        // Send control commands
+        function sendCommand(command) {
+            fetch(`/control?command=${command}`)
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.getElementById('forward').addEventListener('click', () => sendCommand('forward'));
+        document.getElementById('backward').addEventListener('click', () => sendCommand('backward'));
+        document.getElementById('left').addEventListener('click', () => sendCommand('left'));
+        document.getElementById('right').addEventListener('click', () => sendCommand('right'));
+        document.getElementById('stop').addEventListener('click', () => sendCommand('stop'));
+    </script>
+
+</body>
+
+</html>
